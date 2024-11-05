@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pollería "El Cruce" - Control de Pedidos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="top-header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="san juan.png" alt="Logo" width="120">
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar">
+                <button><img src="buscar.png" alt="Buscar" width="20"></button>
+            </div>
+            <div class="delivery-info">
+                <p>Delivery <span>(056) 219240</span></p>
+            </div>
+            <div class="user-options">
+                <p>INGRESA O REGÍSTRATE</p>
+                <img src="login.png" alt="Usuario" width="20">
+            </div>
+        </div>
+        <nav class="navigation">
+            <ul>
+                <li><a href="#">CARTA</a></li>
+                <li><a href="#">PROMOCIONES</a></li>
+                <li><a href="#">LOCALES</a></li>
+                <li><a href="#">VALES</a></li>
+                <li><a href="#">EL CORNER</a></li>
+                <li><a href="#" class="highlighted">EL CRUCE</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+
+    <header>
+        <h1>Polleria El Cruce </h1>
+        <img src="cruce.jpg" alt="Logo UNI" width="300" height="300">
+    </header>
+
+    <section id="equipo">
+        <h2>Integrantes</h2>
+        <p>Integrantes: Jhonathan Capcha, Julio Pillaca, Jose Gavilan, Eduardo Hernandez</p>
+        <p>Ingeniero: Luis Alfredo Castillon Siguas</p>
+    </section>
+
+    <section id="contacto">
+        <h2>Contacto</h2>
+        <a href="https://api.whatsapp.com/send?phone=51917265804&text=Hola%2C%20deseo%20realizar%20una%20pedido!%20%E2%9C%94%EF%B8%8F" target="_blank">
+            <img src="wsp1.webp" alt="WhatsApp"> Contáctanos por WhatsApp
+        </a>
+        <div id="mapa">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3870.3662543288788!2d-75.74557659999999!3d-14.055536799999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9110e2cf7913ac39%3A0x74778c5b73591e6a!2sPoller%C3%ADa%20El%20Cruce!5e0!3m2!1ses!2spe!4v1730761105334!5m2!1ses!2spe" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <form action="https://formspree.io/f/tu-email" method="POST">
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" name="correo" required>
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+
+    <div id="contador">
+        <p>Visitas: <span id="visitCount">0</span></p>
+    </div>
+    </section>
+
+    <section id="descarga">
+        <h2>Descargar</h2>
+        <a href="https://drive.google.com/drive/folders/1kcKWfMQmogwaE1C4v4gg_XLM3K8JcPWL?usp=shar" target="_blank" class="btn-descarga">Descargar Archivo</a>
+    </section>
+
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-message">
+                <p>En tu casa o en la nuestra no importa donde estés, siempre vamos a engreirte con el gran sabor que nos caracteriza. ¡Gracias por preferirnos!</p>
+                <img src="cruce.jpg" alt="Logo" width="100">
+            </div>
+            
+            <div class="footer-links">
+                <h4>MAPA DEL SITIO</h4>
+                <ul>
+                    <li><a href="#">Carta</a></li>
+                    <li><a href="#">Promociones</a></li>
+                    <li><a href="#">Locales</a></li>
+                    <li><a href="#">Nosotros</a></li>
+                    <li><a href="#">Venta corporativa</a></li>
+                    <li><a href="#">Eventos / Cumpleaños</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-legal">
+                <h4>LEGAL</h4>
+                <ul>
+                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="#">Políticas de privacidad</a></li>
+                    <li><a href="#">Legales</a></li>
+                    <li><a href="#">Razones Sociales y RUC</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-payment">
+                <h4>FORMAS DE PAGO</h4>
+                <img src="visa.png" alt="Visa" width="50">
+                <img src="Mastercard-logo.svg.png" alt="MasterCard" width="50">
+                <img src="American_Express_logo_(2018).svg.png" alt="American Express" width="50">
+            </div>
+    
+            <div class="footer-social">
+                <h4>SÍGUENOS EN:</h4>
+                <a href="#"><img src="facebook-6536473_1280.webp" alt="Facebook" width="30"></a>
+                <a href="#"><img src="Instagram_logo_2022.svg.webp" alt="Instagram" width="30"></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>El Cruce todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <script src="contador.js"></script>
+    
+
+</body>
+</html>
