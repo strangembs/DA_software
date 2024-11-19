@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pollería El cruce</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .hero-image {
+            height: 100vh;
+        }
+
+        .swiper-slide {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .menu-item img {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .menu-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .consulta {
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        .consulta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        #whatsapp-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #whatsapp-button:hover {
+            transform: scale(1.1);
+        }
+
+        #menu-carousel {
+            scroll-behavior: smooth;
+        }
+
+        .social-icon {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #FCD34D;
+            transition: width 0.3s ease-in-out;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+
+        
+    </style>
+</head>
+<body class="bg-yellow-50 font-sans">
+    <header class="bg-yellow-800 text-yellow-100 sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-3xl font-bold font-serif">Pollería El cruce</a>
+                <div class="hidden md:flex items-center space-x-6">
+                    <div class="relative">
+                        <input type="search" placeholder="Buscar" class="pl-10 pr-4 py-2 rounded-full border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-yellow-600"></i>
+                    </div>
+                    <div class="flex items-center text-yellow-100">
+                        <span class="mr-2">Delivery</span>
+                    </div>
+                    <a href="tel:+5116135000" class="text-yellow-100 hover:text-yellow-300">
+                        <span class="font-bold">+(56) 505370</span>
+                    </a>
+                    <a href="carta.html" class="nav-link text-yellow-100 hover:text-yellow-300 transition-colors duration-300">Menú</a>
+                    <a href="nosotros.html" class="nav-link text-yellow-100 hover:text-yellow-300 transition-colors duration-300">Nosotros</a>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-yellow-100">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div id="mobile-menu" class="hidden mt-4 md:hidden">
+                <a href="menu.html" class="block text-yellow-100 hover:text-yellow-300 transition-colors duration-300 py-2">Menú</a>
+                <a href="nosotros.html" class="block text-yellow-100 hover:text-yellow-300 transition-colors duration-300 py-2">Nosotros</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-image relative">
+            <div class="swiper-container h-full">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" style="background-image: url('https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')"></div>
+                    <div class="swiper-slide" style="background-image: url('https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')"></div>
+                    <div class="swiper-slide" style="background-image: url('https://images.unsplash.com/photo-1562967914-608f82629710?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+            <div data-aos="fade-up" class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center text-white p-8 rounded-lg">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-4">El cruce Pollería</h1>
+                    <p class="text-xl mb-8">El mejor pollo a la brasa de Ica</p>
+                    <a href="#menu" class="bg-yellow-600 text-white px-8 py-3 rounded-full hover:bg-yellow-700 transition-colors duration-300 inline-block transform hover:scale-105">Ver Nuestro Menú</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="menu" class="py-16 bg-yellow-100">
+            <div class="container mx-auto px-4">
+                <h2 data-aos="fade-up" class="text-4xl font-bold text-center mb-12 text-yellow-900">PROMOCIONES</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="menu-item" data-aos="fade-up">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden relative">
+                            <div class="absolute top-4 right-4 z-10">
+                                <button class="text-green-500 hover:text-green-600">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                            <img src="C2.jpg" alt="MEGAROKYTO" class="w-full h-60 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">MEGACRUCE</h3>
+                                <p class="text-gray-600 mb-4">1 pollo + 1/4 de pollo + papas + ensalada + 1 gaseosa 1.5L + 4 taqueños</p>
+                                <div class="flex justify-between items-center mb-4">
+                                    <span class="text-3xl font-bold">S/ 70.90</span>
+                                </div>
+                                <button class="w-full bg-green-600 text-white py-3 rounded-lg text-lg font-bold hover:bg-green-700 transition-colors duration-300">
+                                    COMPRAR
+                                </button>
+                                <a href="#" class="text-center block mt-2 text-sm text-green-600 hover:text-green-700">Términos y condiciones</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden relative">
+                            <div class="absolute top-4 right-4 z-10">
+                                <button class="text-green-500 hover:text-green-600">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                            <img src="C5.png" alt="COMBO FAMILIAR" class="w-full h-60 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">COMBO FAMILIAR</h3>
+                                <p class="text-gray-600 mb-4">1 pollo entero + papas familiares + ensalada familiar + chaufa + 1 gaseosas 1.5L</p>
+                                <div class="flex justify-between items-center mb-4">
+                                    <span class="text-3xl font-bold">S/ 79.90</span>
+                                </div>
+                                <button class="w-full bg-green-600 text-white py-3 rounded-lg text-lg font-bold hover:bg-green-700 transition-colors duration-300">
+                                    COMPRAR
+                                </button>
+                                <a href="#" class="text-center block mt-2 text-sm text-green-600 hover:text-green-700">Términos y condiciones</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden relative">
+                            <div class="absolute top-4 right-4 z-10">
+                                <button class="text-green-500 hover:text-green-600">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                            <img src="C4.png" alt="DÚO PERFECTO" class="w-full h-60 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">DÚO BRASA</h3>
+                                <p class="text-gray-600 mb-4">1/8 pollo + papas medianas + ensalada personal + chaufa + 2 gaseosas 500ml</p>
+                                <div class="flex justify-between items-center mb-4">
+                                    <span class="text-3xl font-bold">S/ 29.90</span>
+                                </div>
+                                <button class="w-full bg-green-600 text-white py-3 rounded-lg text-lg font-bold hover:bg-green-700 transition-colors duration-300">
+                                    COMPRAR
+                                </button>
+                                <a href="#" class="text-center block mt-2 text-sm text-green-600 hover:text-green-700">Términos y condiciones</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden relative">
+                            <div class="absolute top-4 right-4 z-10">
+                                <button class="text-green-500 hover:text-green-600">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                            <img src="c1.jpg" alt="COMBO ANTICUCHERO" class="w-full h-60 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">ANTICUCHERO</h3>
+                                <p class="text-gray-600 mb-4">2 porciones de anticuchos + choclo + papas sancochadas </p>
+                                <div class="flex justify-between items-center mb-4">
+                                    <span class="text-3xl font-bold">S/ 25.90</span>
+                                </div>
+                                <button class="w-full bg-green-600 text-white py-3 rounded-lg text-lg font-bold hover:bg-green-700 transition-colors duration-300">
+                                    COMPRAR
+                                </button>
+                                <a href="#" class="text-center block mt-2 text-sm text-green-600 hover:text-green-700">Términos y condiciones</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-item" data-aos="fade-up" data-aos-delay="400">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden relative">
+                            <div class="absolute top-4 right-4 z-10">
+                                <button class="text-green-500 hover:text-green-600">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                            <img src="c6.jpg" alt="COMBO CHAUFERO" class="w-full h-60 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">COMBO CHAUFERO</h3>
+                                <p class="text-gray-600 mb-4"> 1/8 pollo + ensalada + 1 gaseosas 1.5L</p>
+                                <div class="flex justify-between items-center mb-4">
+                                    <span class="text-3xl font-bold">S/ 13.90</span>
+                                </div>
+                                <button class="w-full bg-green-600 text-white py-3 rounded-lg text-lg font-bold hover:bg-green-700 transition-colors duration-300">
+                                    COMPRAR
+                                </button>
+                                <a href="#" class="text-center block mt-2 text-sm text-green-600 hover:text-green-700">Términos y condiciones</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-item" data-aos="fade-up" data-aos-delay="500">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden relative">
+                            <div class="absolute top-4 right-4 z-10">
+                                <button class="text-green-500 hover:text-green-600">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                            <img src="c3.jpg" alt="COMBO ECONÓMICO" class="w-full h-60 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">COMBO ECONÓMICO</h3>
+                                <p class="text-gray-600 mb-4">1/4 pollo + papas personales + ensalada personal + 1 gaseosa 1.5L</p>
+                                <div class="flex justify-between items-center mb-4">
+                                    <span class="text-3xl font-bold">S/ 29.90</span>
+                                </div>
+                                <button class="w-full bg-green-600 text-white py-3 rounded-lg text-lg font-bold hover:bg-green-700 transition-colors duration-300">
+                                    COMPRAR
+                                </button>
+                                <a href="#" class="text-center block mt-2 text-sm text-green-600 hover:text-green-700">Términos y condiciones</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="consultas" class="py-16 bg-yellow-100">
+            <div class="container mx-auto px-4">
+                <h2 data-aos="fade-up" class="text-4xl font-bold text-center mb-12 text-yellow-900">Consultas Rápidas</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div data-aos="fade-up" data-aos-delay="100" class="consulta bg-white p-6 rounded-lg shadow-md cursor-pointer" onclick="openModal('ventas')">
+                        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Ventas del Día" class="w-full h-40 object-cover mb-4 rounded-md">
+                        <h3 class="text-xl font-semibold mb-2 text-yellow-800">Ventas del Día</h3>
+                        <p class="text-yellow-700">Consulta las ventas realizadas hoy</p>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="200" class="consulta bg-white p-6 rounded-lg shadow-md cursor-pointer" onclick="openModal('stock')">
+                        <img src="https://images.unsplash.com/photo-1534723452862-4c874018d66d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Stock de Insumos" class="w-full h-40 object-cover mb-4 rounded-md">
+                        <h3 class="text-xl font-semibold mb-2 text-yellow-800">Stock de Insumos</h3>
+                        <p class="text-yellow-700">Verifica el inventario actual de insumos</p>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="300" class="consulta bg-white p-6 rounded-lg shadow-md cursor-pointer" onclick="openModal('reservaciones')">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Reservaciones" class="w-full h-40 object-cover mb-4 rounded-md">
+                        <h3 class="text-xl font-semibold mb-2 text-yellow-800">Reservaciones</h3>
+                        <p class="text-yellow-700">Revisa las reservaciones pendientes</p>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="400" class="consulta bg-white p-6 rounded-lg shadow-md cursor-pointer" onclick="openModal('empleados')">
+                        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Empleados en Turno" class="w-full h-40 object-cover mb-4 rounded-md">
+                        <h3 class="text-xl font-semibold mb-2 text-yellow-800">Empleados en Turno</h3>
+                        <p class="text-yellow-700">Consulta los empleados que están trabajando ahora</p>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="500" class="consulta bg-white p-6 rounded-lg shadow-md cursor-pointer" onclick="openModal('platos')">
+                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Platos más Vendidos" class="w-full h-40 object-cover mb-4 rounded-md">
+                        <h3 class="text-xl font-semibold mb-2 text-yellow-800">Platos más Vendidos</h3>
+                        <p class="text-yellow-700">Descubre los platos más populares del mes</p>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="600" class="consulta bg-white p-6 rounded-lg shadow-md cursor-pointer" onclick="openModal('feedback')">
+                        <img src="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Feedback de Clientes" class="w-full h-40 object-cover mb-4 rounded-md">
+                        <h3 class="text-xl font-semibold mb-2 text-yellow-800">Feedback de Clientes</h3>
+                        <p class="text-yellow-700">Lee las últimas reseñas de los clientes</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-16 bg-yellow-50">
+            <div class="container mx-auto px-4">
+                <h2 data-aos="fade-up" class="text-4xl font-bold text-center mb-12 text-yellow-900">Contáctanos</h2>
+                <div class="flex flex-col lg:flex-row justify-between">
+                    <div data-aos="fade-right" class="lg:w-1/2 mb-8 lg:mb-0">
+                        <h3 class="text-2xl font-semibold mb-4 text-yellow-800">Información de Contacto</h3>
+                        <p class="flex items-center mb-2"><i class="fas fa-map-marker-alt mr-2 text-yellow-600"></i> Urb. El Carmen A-1 , Ica, Peru</p>
+                        <p class="flex items-center mb-2"><i class="fas fa-phone mr-2 text-yellow-600"></i> +51 917265804</p>
+                        <p class="flex items-center mb-2"><i class="fas fa-envelope mr-2 text-yellow-600"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="690c050a1b1c0a0c000a08290e04080005470a0604">Elcruceica@gmail.com</a></p>
+                        <p class="flex items-center mb-4"><i class="fas fa-clock mr-2 text-yellow-600"></i> Lunes a Domingo, 1:00 PM - 10:30 PM</p>
+                        <div class="flex space-x-4 mb-8">
+                            <a href="https://www.facebook.com/profile.php?id=100057494677432" target="_blank" rel="noopener noreferrer" class="social-icon text-yellow-700 hover:text-yellow-900 transition-colors duration-300">
+                                <i class="fab fa-facebook fa-2x"></i>
+                            </a>
+                            <a href="https://www.instagram.com/strange.unreal/" target="_blank" rel="noopener noreferrer" class="social-icon text-yellow-700 hover:text-yellow-900 transition-colors duration-300">
+                                <i class="fab fa-instagram fa-2x"></i>
+                            </a>
+                            <a href="https://x.com/?lang=es" target="_blank" rel="noopener noreferrer" class="social-icon text-yellow-700 hover:text-yellow-900 transition-colors duration-300">
+                                <i class="fab fa-twitter fa-2x"></i>
+                            </a>
+                        </div>
+                        <div class="w-full h-64 rounded-lg overflow-hidden">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3870.3662543288788!2d-75.74557659999999!3d-14.055536799999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9110e2cf7913ac39%3A0x74778c5b73591e6a!2sPoller%C3%ADa%20El%20Cruce!5e0!3m2!1ses!2spe!4v1731987482702!5m2!1ses!2spe" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                    <form data-aos="fade-left" class="lg:w-1/2 lg:pl-8 space-y-4">
+                        <input type="text" placeholder="Nombre" class="w-full px-4 py-2 rounded-md border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all duration-300">
+                        <input type="email" placeholder="Email" class="w-full px-4 py-2 rounded-md border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all duration-300">
+                        <textarea placeholder="Mensaje" rows="4" class="w-full px-4 py-2 rounded-md border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all duration-300"></textarea>
+                        <button type="submit" class="w-full bg-yellow-600 text-white px-6 py-3 rounded-full hover:bg-yellow-700 transition-colors duration-300 transform hover:scale-105">
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    
+
+    <footer class="bg-yellow-800 text-yellow-100 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2024 Pollería El cruce Todos los derechos reservados.</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-yellow-300 transition-colors duration-300">Política de Privacidad</a>
+                    <a href="#" class="hover:text-yellow-300 transition-colors duration-300">Términos de Servicio</a>
+                </div>
+
+                
+
+                
+            </div>
+            <p class="text-center mt-4">Esta página ha sido visitada <span id="visit-count">0</span> veces.</p>
+        </div>
+        
+    </footer>
+
+    <a href="https://wa.me/51938318881" target="_blank" rel="noopener noreferrer" id="whatsapp-button" class="bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition-colors duration-300">
+        <i class="fab fa-whatsapp fa-2x"></i>
+    </a>
+
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+
+        // Initialize Swiper
+        var swiper = new Swiper('.swiper-container', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Visit counter
+        let visitCount = localStorage.getItem('visitCount') || 0;
+        visitCount = parseInt(visitCount) + 1;
+        localStorage.setItem('visitCount', visitCount);
+        document.getElementById('visit-count').textContent = visitCount;
+
+        // Functions for modals
+        function openModal(modalType) {
+            const modal = document.getElementById(`modal-${modalType}`);
+            modal.style.display = "block";
+            loadModalData(modalType);
+        }
+
+        function closeModal(modalType) {
+            const modal = document.getElementById(`modal-${modalType}`);
+            modal.style.display = "none";
+        }
+
+        // Close modals when clicking on X
+        document.querySelectorAll('.close').forEach(closeBtn => {
+            closeBtn.onclick = function() {
+                this.closest('.modal').style.display = 'none';
+            }
+        });
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+
+        function loadModalData(modalType) {
+            switch(modalType) {
+                case 'ventas':
+                    loadVentasChart();
+                    break;
+                case 'stock':
+                    loadStockList();
+                    break;
+                case 'reservaciones':
+                    loadReservacionesList();
+                    break;
+                case 'empleados':
+                    loadEmpleadosList();
+                    break;
+                case 'platos':
+                    loadPlatosChart();
+                    break;
+                case 'feedback':
+                    loadFeedbackList();
+                    break;
+            }
+        }
+
+        function loadVentasChart() {
+            const ctx = document.getElementById('ventas-chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['10:00', '12:00', '14:00', '16:00', '18:00', '20:00'],
+                    datasets: [{
+                        label: 'Ventas (S/)',
+                        data: [150, 300, 200, 400, 300, 350],
+                        borderColor: 'rgb(255, 99, 132)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function loadStockList() {
+            const stockList = document.getElementById('stock-list');
+            stockList.innerHTML = `
+                <li>Pollo: 50 unidades</li>
+                <li>Papas: 100 kg</li>
+                <li>Aceite: 20 litros</li>
+                <li>Ensalada: 30 porciones</li>
+                <li>Salsas: 5 litros de cada tipo</li>
+            `;
+        }
+
+        function loadReservacionesList() {
+            const reservacionesList = document.getElementById('reservaciones-list');
+            reservacionesList.innerHTML = `
+                <li>Mesa 5 - 4 personas - 20:00</li>
+                <li>Mesa 8 - 6 personas - 20:30</li>
+                <li>Mesa 3 - 2 personas - 21:00</li>
+            `;
+        }
+
+        function loadEmpleadosList() {
+            const empleadosList = document.getElementById('empleados-list');
+            empleadosList.innerHTML = `
+                <li>Juan Pérez - Cocinero</li>
+                <li>María García - Mesera</li>
+                <li>Carlos López - Cajero</li>
+                <li>Ana Martínez - Ayudante de cocina</li>
+            `;
+        }
+
+        function loadPlatosChart() {
+            const ctx = document.getElementById('platos-chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['1/4 Pollo', '1/2 Pollo', 'Pollo Entero', 'Anticuchos', 'Chaufa'],
+                    datasets: [{
+                        label: 'Cantidad vendida',
+                        data: [50, 30, 20, 15, 25],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function loadFeedbackList() {
+            const feedbackList = document.getElementById('feedback-list');
+            feedbackList.innerHTML = `
+                <li>"Excelente servicio y comida deliciosa" - Laura S.</li>
+                <li>"El pollo estaba perfectamente cocinado" - Pedro M.</li>
+                <li>"Ambiente familiar y acogedor" - Sofia R.</li>
+                <li>"Las salsas son increíbles" - Diego L.</li>
+            `;
+        }
+
+        // Smooth scroll para los enlaces de navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animación del botón de WhatsApp
+        const whatsappButton = document.getElementById('whatsapp-button');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                whatsappButton.style.transform = 'scale(1)';
+                whatsappButton.style.opacity = '1';
+            } else {
+                whatsappButton.style.transform = 'scale(0)';
+                whatsappButton.style.opacity = '0';
+            }
+        });
+    </script>
+</body>
+</html>
+
+<html>
+<head>
+    <title>Ejemplo de Sesión</title>
+</head>
+<body>
+    <nav class="menu">
+
+    <!-- ... (código existente) ... -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userEmail = localStorage.getItem('userEmail');
+            const loginLink = document.getElementById('loginLink'); // Changed to use ID selector
+
+            if (userEmail) {
+                // Usuario ha iniciado sesión
+                loginLink.textContent = 'Cerrar Sesión';
+                loginLink.href = '#';
+                loginLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('userEmail');
+                    window.location.reload();
+                });
+            } else {
+                // Usuario no ha iniciado sesión
+                loginLink.textContent = 'Iniciar Sesión';
+                loginLink.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>
