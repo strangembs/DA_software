@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de pedidos - Pollería El cruce</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #FCD34D;
+            transition: width 0.3s ease-in-out;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        #cart-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        #cart-button {
+            background-color: #FCD34D;
+            color: #4B5563;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #cart-button:hover {
+            background-color: #F59E0B;
+            transform: scale(1.05);
+        }
+
+        #cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #EF4444;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        #cart-dropdown {
+            position: absolute;
+            top: 70px;
+            right: 0;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        #cart-dropdown.show {
+            display: block;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-item-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .cart-item-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+        }
+
+        .cart-item-price {
+            color: #4B5563;
+            font-size: 0.9em;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            background-color: #E5E7EB;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .quantity-btn:hover {
+            background-color: #D1D5DB;
+        }
+
+        #cart-total {
+            padding: 10px;
+            font-weight: bold;
+            text-align: right;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        #checkout-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #FCD34D;
+            color: #4B5563;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #checkout-button:hover {
+            background-color: #F59E0B;
+        }
+        
+    </style>
+</head>
+<body class="bg-yellow-50 min-h-screen">
+    <header class="bg-yellow-800 text-yellow-100 sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="text-3xl font-bold font-serif">Pollería El cruce</a>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="hover:text-yellow-300 transition-colors duration-300">Inicio</a>
+                    <a href="nosotros.html" class="hover:text-yellow-300 transition-colors duration-300">Nosotros</a>
+                    <a href="contacto.html" class="hover:text-yellow-300 transition-colors duration-300">Contactanos</a>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-yellow-100">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div id="mobile-menu" class="hidden mt-4 md:hidden">
+                <a href="index.html" class="block text-yellow-100 hover:text-yellow-300 transition-colors duration-300 py-2">Inicio</a>
+                <a href="nosotros.html" class="block text-yellow-100 hover:text-yellow-300 transition-colors duration-300 py-2">Nosotros</a>
+                <a href="contacto.html" class="block text-yellow-100 hover:text-yellow-300 transition-colors duration-300 py-2">Contactanos</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <h2 class="text-2xl font-bold mb-6">Nuestra Carta</h2>
+        <div id="menu" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Los elementos del menú se generarán dinámicamente aquí -->
+        </div>
+
+        <div id="cart-container">
+            <button id="cart-button">
+                <i class="fas fa-shopping-cart text-2xl"></i>
+                <span id="cart-count">0</span>
+            </button>
+            <div id="cart-dropdown">
+                <div id="cart-items"></div>
+                <div id="cart-total"></div>
+                <button id="checkout-button">Realizar Pedido</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="orderModal" class="modal">
+        <div class="modal-content bg-white rounded-lg p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold">Tu pedido</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div id="modalContent">
+                <!-- El contenido del modal se generará dinámicamente aquí -->
+            </div>
+        </div>
+    </div>
+    <div class="text-center ">
+        <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-x-6">
+            <!-- Puedes agregar contenido adicional aquí -->
+        </div>
+        <p class="mt-4 text-lg text-gray-800 font-medium">
+            Esta página ha sido visitada: 
+            <span id="visit-count" class="font-bold text-red-700">0</span> veces.
+        </p>
+    </div>
+    <footer class="bg-yellow-800 text-yellow-100 py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- Team Members -->
+                <div class="col-span-2">
+                    <h3 class="text-xl font-semibold mb-4">Nuestro Equipo</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <div>
+                                <p class="font-medium">Jhonathan Rolando Capcha Quintanilla</p>
+                                <p class="text-sm text-yellow-200">jhonathan.capcha@upsjb.edu.pe</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <div>
+                                <p class="font-medium">Eduardo Javier Hernández Hernández</p>
+                                <p class="text-sm text-yellow-200">eduardoj.hernandez@upsjb.edu.pe</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <div>
+                                <p class="font-medium">Juan Jose Gavilan Ayala</p>
+                                <p class="text-sm text-yellow-200">jorge.mendoza@elcruce.com</p>
+                            </div>
+                            
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <div>
+                                <p class="font-medium">Julio Cesar Pillaca Ccorahua</p>
+                                <p class="text-sm text-yellow-200">Julio.pillaca@upsjb.edu.pe</p>
+                            </div>
+                            
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fa-solid fa-circle-user"></i>
+                            </span>
+                            <div>
+                                <p class="font-medium">Ing. Luis Alfredo Castillon Siguas</p>
+                                <p class="text-sm text-yellow-200">luis.castillon@upsjb.edu.pe</p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Company Info -->
+                <div class="text-right">
+                    <img src="SJ.webp" alt="El Cruce Logo" class="ml-auto mb-4">
+                    <p class="text-sm mb-2">V ciclo - TA</p>
+                    <p class="text-sm mb-2">Ingeniería de Software II</p>
+                    <p class="text-sm">Ingeniería de Computación y Sistemas</p>
+                </div>
+            </div>
+    
+
+    
+            <!-- Copyright and Links -->
+            <div class="text-center border-t border-yellow-700 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                </div>
+                <p class="mt-4">&copy; 2024 Pollería El cruce. Todos los derechos reservados. <span class="font-medium"></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const menuItems = [
+            { id: 1, name: "Pollo Entero", price: 70.90, category: "Pollos a la Brasa", image: "C2.jpg" },
+            { id: 2, name: "Medio Pollo", price: 32.90, category: "Pollos a la Brasa", image: "s7.jpg" },
+            { id: 3, name: "Cuarto de Pollo", price: 18.90, category: "Pollos a la Brasa", image: "s6.png" },
+            { id: 4, name: "Parrilla Mixta", price: 65.90, category: "Parrillas", image: "https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" },
+            { id: 5, name: "Anticuchos", price: 25.90, category: "Parrillas", image: "c1.jpg" },
+            { id: 6, name: "Chuleta de Cerdo", price: 28.90, category: "Parrillas", image: "https://images.unsplash.com/photo-1432139509613-5c4255815697?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80" },
+            { id: 7, name: "Papas Fritas", price: 12.90, category: "Guarniciones", image: "s3.jpeg" },
+            { id: 8, name: "Ensalada Mixta", price: 10.90, category: "Guarniciones", image: "s4.jpg" },
+            { id: 9, name: "Chaufa de Pollo", price: 18.90, category: "Guarniciones", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80" },
+            { id: 10, name: "Chicha Morada", price: 10.90, category: "Bebidas", image: "si1.webp" },
+            { id: 11, name: "Limonada", price: 10.90, category: "Bebidas", image: "s2.webp" },
+            { id: 12, name: "Gaseosa", price: 8.90, category: "Bebidas", image: "s0.jpg" }
+        ];
+
+        let cart = [];
+        let currentStep = 1;
+        let deliveryMethod = 'pickup';
+        let paymentMethod = 'credit_card';
+
+        function renderMenu() {
+            const menuContainer = document.getElementById('menu');
+            menuContainer.innerHTML = menuItems.map(item => `
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="${item.image}" alt="${item.name}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2">${item.name}</h3>
+                        <p class="text-gray-600 mb-4">S/ ${item.price.toFixed(2)}</p>
+                        <button onclick="addToCart(${item.id})" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition-colors duration-300">
+                            Agregar al carrito
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(itemId) {
+            const item = menuItems.find(i => i.id === itemId);
+            const existingItem = cart.find(i => i.id === itemId);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...item, quantity: 1 });
+            }
+            renderCart();
+            showCartDropdown();
+        }
+
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            renderCart();
+        }
+
+        function updateQuantity(itemId, newQuantity) {
+            if (newQuantity <= 0) {
+                removeFromCart(itemId);
+            } else {
+                const item = cart.find(i => i.id === itemId);
+                if (item) {
+                    item.quantity = newQuantity;
+                }
+            }
+            renderCart();
+        }
+
+        function getTotalPrice() {
+            return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+        }
+
+        function renderCart() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            const cartCount = document.getElementById('cart-count');
+            const checkoutButton = document.getElementById('checkout-button');
+
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="p-4 text-gray-500 italic">No hay items en tu carrito</p>';
+                cartTotal.textContent = '';
+                checkoutButton.style.display = 'none';
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                            <div class="cart-item-details">
+                                <span class="cart-item-name
+">${item.name}</span>
+                                <span class="cart-item-price">S/ ${item.price.toFixed(2)}</span>
+                            </div>
+                        </div>
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                            <span class="mx-2">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                        </div>
+                    </div>
+                `).join('');
+                cartTotal.textContent = `Total: S/ ${getTotalPrice()}`;
+                checkoutButton.style.display = 'block';
+            }
+        }
+
+        function showCartDropdown() {
+            const cartDropdown = document.getElementById('cart-dropdown');
+            cartDropdown.classList.add('show');
+            setTimeout(() => {
+                cartDropdown.classList.remove('show');
+            }, 3000);
+        }
+
+        function handleOrder() {
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío. Agrega algunos productos antes de realizar el pedido.');
+                return;
+            }
+            currentStep = 1;
+            renderOrderStep();
+            document.getElementById('orderModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        function nextStep() {
+            currentStep++;
+            renderOrderStep();
+        }
+
+        function prevStep() {
+            currentStep--;
+            renderOrderStep();
+        }
+
+        function renderOrderStep() {
+            const modalContent = document.getElementById('modalContent');
+            switch (currentStep) {
+                case 1:
+                    modalContent.innerHTML = `
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold">Revisa tu pedido</h3>
+                            ${cart.map(item => `
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2">
+                                        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded">
+                                        <span>${item.name}</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="updateQuantity(${item.id}, ${item.quantity - 1})" class="bg-gray-200 px-2 py-1 rounded">-</button>
+                                        <span>${item.quantity}</span>
+                                        <button onclick="updateQuantity(${item.id}, ${item.quantity + 1})" class="bg-gray-200 px-2 py-1 rounded">+</button>
+                                        <span>S/ ${(item.price * item.quantity).toFixed(2)}</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                            <div class="text-right font-semibold">Total: S/ ${getTotalPrice()}</div>
+                        </div>
+                        <div class="flex justify-between mt-6">
+                            <button onclick="closeModal()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors duration-300">Cancelar</button>
+                            <button onclick="nextStep()" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition-colors duration-300">Siguiente</button>
+                        </div>
+                    `;
+                    break;
+                case 2:
+                    modalContent.innerHTML = `
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold">Método de entrega</h3>
+                            <div>
+                                <input type="radio" id="pickup" name="deliveryMethod" value="pickup" ${deliveryMethod === 'pickup' ? 'checked' : ''} onchange="deliveryMethod = 'pickup'">
+                                <label for="pickup">Recoger en tienda</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="delivery" name="deliveryMethod" value="delivery" ${deliveryMethod === 'delivery' ? 'checked' : ''} onchange="deliveryMethod = 'delivery'">
+                                <label for="delivery">Delivery</label>
+                            </div>
+                            ${deliveryMethod === 'delivery' ? `
+                                <div class="space-y-2">
+                                    <label for="address">Dirección de entrega</label>
+                                    <textarea id="address" placeholder="Ingresa tu dirección completa" class="w-full p-2 border rounded"></textarea>
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class="flex justify-between mt-6">
+                            <button onclick="prevStep()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors duration-300">Anterior</button>
+                            <button onclick="nextStep()" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition-colors duration-300">Siguiente</button>
+                        </div>
+                    `;
+                    break;
+                case 3:
+                    modalContent.innerHTML = `
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold">Método de pago</h3>
+                            <div>
+                                <input type="radio" id="credit_card" name="paymentMethod" value="credit_card" ${paymentMethod === 'credit_card' ? 'checked' : ''} onchange="setPaymentMethod('credit_card')">
+                                <label for="credit_card">Tarjeta de crédito/débito</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="cash" name="paymentMethod" value="cash" ${paymentMethod === 'cash' ? 'checked' : ''} onchange="setPaymentMethod('cash')">
+                                <label for="cash">Efectivo</label>
+                            </div>
+                            <div id="payment-details"></div>
+                        </div>
+                        <div class="flex justify-between mt-6">
+                            <button onclick="prevStep()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors duration-300">Anterior</button>
+                            <button onclick="nextStep()" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition-colors duration-300">Siguiente</button>
+                        </div>
+                    `;
+                    updatePaymentDetails();
+                    break;
+                case 4:
+                    modalContent.innerHTML = `
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold">Confirma tu pedido</h3>
+                            <div>
+                                <p><strong>Método de entrega:</strong> ${deliveryMethod === 'pickup' ? 'Recoger en tienda' : 'Delivery'}</p>
+                                <p><strong>Método de pago:</strong> ${
+                                    paymentMethod === 'credit_card' ? 'Tarjeta de crédito/débito' : 'Efectivo'
+                                }</p>
+                                <p><strong>Total:</strong> S/ ${getTotalPrice()}</p>
+                            </div>
+                            <button onclick="confirmOrder()" class="w-full bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition-colors duration-300">
+                                Confirmar pedido
+                            </button>
+                        </div>
+                        <div class="flex justify-start mt-6">
+                            <button onclick="prevStep()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors duration-300">Anterior</button>
+                        </div>
+                    `;
+                    break;
+            }
+        }
+
+        function setPaymentMethod(method) {
+            paymentMethod = method;
+            updatePaymentDetails();
+        }
+
+        function updatePaymentDetails() {
+            const paymentDetails = document.getElementById('payment-details');
+            if (paymentMethod === 'credit_card') {
+                paymentDetails.innerHTML = `
+                    <div class="space-y-2">
+                        <label for="card_number">Número de tarjeta</label>
+                        <input id="card_number" placeholder="1234 5678 9012 3456" class="w-full p-2 border rounded">
+                        <div class="flex space-x-2">
+                            <div class="flex-1">
+                                <label for="expiry">Fecha de expiración</label>
+                                <input id="expiry" placeholder="MM/YY" class="w-full p-2 border rounded">
+                            </div>
+                            <div class="flex-1">
+                                <label for="cvv">CVV</label>
+                                <input id="cvv" placeholder="123" class="w-full p-2 border rounded">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (paymentMethod === 'cash') {
+                paymentDetails.innerHTML = `
+                    <p class="text-gray-600">El pago en efectivo se realizará al momento de la entrega.</p>
+                `;
+            }
+        }
+
+        function confirmOrder() {
+            let message = '¡Pedido realizado con éxito!';
+            if (paymentMethod === 'cash') {
+                message += ' El pago se realizará en efectivo al momento de la entrega.';
+            } else if (paymentMethod === 'credit_card') {
+                message += ' El pago se ha procesado con tu tarjeta de crédito/débito.';
+            }
+            alert(message);
+            cart = [];
+            renderCart();
+            closeModal();
+        }
+
+        
+
+        // Toggle cart dropdown
+        const cartButton = document.getElementById('cart-button');
+        const cartDropdown = document.getElementById('cart-dropdown');
+
+        cartButton.addEventListener('click', () => {
+            cartDropdown.classList.toggle('show');
+        });
+
+        // Close cart dropdown when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!cartButton.contains(event.target) && !cartDropdown.contains(event.target)) {
+                cartDropdown.classList.remove('show');
+            }
+        });
+
+                // Mobile menu toggle
+                document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Inicializar la página
+        renderMenu();
+        renderCart();
+
+                            // Visit counter
+                            let visitCount = localStorage.getItem('visitCount') || 0;
+        visitCount = parseInt(visitCount) + 1;
+        localStorage.setItem('visitCount', visitCount);
+        document.getElementById('visit-count').textContent = visitCount;
+
+        // Functions for modals
+        function openModal(modalType) {
+            const modal = document.getElementById(`modal-${modalType}`);
+            modal.style.display = "block";
+            loadModalData(modalType);
+        }
+
+        // Event listeners
+        document.querySelector('.close').addEventListener('click', closeModal);
+        window.addEventListener('click', function(event) {
+            if (event.target == document.getElementById('orderModal')) {
+                closeModal();
+            }
+        });
+        document.getElementById('checkout-button').addEventListener('click', handleOrder);
+    </script>
+</body>
+</html>
+

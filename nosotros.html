@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros - Pollería El cruce</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FEF3C7;
+        }
+        .section-container {
+            background-color: #FFFFFF;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .section-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-yellow-50">
+    <header class="bg-yellow-800 text-yellow-100 sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="text-3xl font-bold font-serif">Pollería El cruce</a>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="hover:text-yellow-300 transition-colors duration-300">Inicio</a>
+                    <a href="carta.html" class="hover:text-yellow-300 transition-colors duration-300">Carta</a>
+                    <a href="contacto.html" class="hover:text-yellow-300 transition-colors duration-300">Contactanos</a>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-yellow-100">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div id="mobile-menu" class="hidden mt-4 md:hidden">
+                <a href="index.html" class="block text-yellow-100 hover:text-yellow-300 transition-colors duration-300 py-2">Inicio</a>
+                <a href="carta.html" class="block text-yellow-100 hover:text-yellow-300 transition-colors duration-300 py-2">Carta</a>
+                <a href="contacto.html" class="block text-yellow-100 hover:text-yellow-300 transition-colors duration-300 py-2">Contactanos</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-center text-yellow-900 mb-12">Nuestra Historia</h1>
+
+        <section class="section-container mb-12 p-8">
+            <h2 class="text-3xl font-bold text-yellow-800 mb-6">Sobre Nosotros</h2>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="md:w-1/2">
+                    <p class="text-gray-700 mb-4">
+                        Bienvenidos a Pollería El Cruce, un lugar donde el sabor y la tradición se encuentran para brindarte una experiencia única. Desde nuestra fundación, nos hemos dedicado a ofrecerte los mejores pollos a la brasa, preparados con ingredientes de alta calidad y siguiendo recetas que reflejan lo mejor de la gastronomía peruana.
+                    </p>
+                    <p class="text-gray-700 mb-4">
+                        Ubicados en San Joaquín, Ica, somos más que una pollería: somos un espacio donde las familias y amigos se reúnen para compartir momentos especiales. Nuestro compromiso con la excelencia no solo se refleja en nuestros platos, sino también en la atención personalizada que ofrecemos a cada cliente.
+                    </p>
+                    <p class="text-gray-700 mb-4">
+                        En Pollería El Cruce, creemos que la comida debe ser más que un simple alimento; debe contar una historia, transmitir emociones y dejar un recuerdo inolvidable. Te invitamos a visitarnos y ser parte de nuestra familia, donde cada bocado es una celebración del sabor y la calidez.
+                    </p>
+                </div>
+                <div class="md:w-1/2">
+                    <img src="ns2.png" alt="Fundadores de La Espiga Pollería" class="w-full h-auto rounded-lg shadow-lg">
+                </div>
+            </div>
+        </section>
+
+
+        <section class="section-container mb-12 p-8">
+            <h2 class="text-3xl font-bold text-yellow-800 mb-6">Nuestra Ubicación</h2>
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2">
+                    <div class="aspect-w-16 aspect-h-9">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3870.3662543288788!2d-75.74557659999999!3d-14.055536799999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9110e2cf7913ac39%3A0x74778c5b73591e6a!2sPoller%C3%ADa%20El%20Cruce!5e0!3m2!1ses!2spe!4v1731987482702!5m2!1ses!2spe" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold text-yellow-700 mb-4">Visítanos</h3>
+                    <p class="text-gray-700 mb-4">Te invitamos a disfrutar de la auténtica experiencia de La Pollería El cruce en nuestra ubicación principal:</p>
+                    <p class="font-bold text-yellow-800 mb-2">Urb. El Carmen A-1 , Ica, Peru</p>
+                    <p class="text-gray-700 mb-4">Horario de atención:<br>Lunes a Domingo, 1:00 PM - 10:30 PM</p>
+                    <h4 class="text-xl font-bold text-yellow-700 mb-2">¿Por qué visitarnos?</h4>
+                    <ul class="list-disc list-inside text-gray-700 mb-4">
+                        <li>Ambiente acogedor y familiar</li>
+                        <li>Muy buena atencion</li>
+                        <li>Celebramos tu CUMPLEAÑOS</li>
+                    </ul>
+                    <p class="text-gray-700">¡Esperamos verte pronto para que disfrutes de nuestro delicioso pollo a la brasa y mucho más!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <div class="text-center ">
+        <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-x-6">
+            <!-- Puedes agregar contenido adicional aquí -->
+        </div>
+        <p class="mt-4 text-lg text-gray-800 font-medium">
+            Esta página ha sido visitada: 
+            <span id="visit-count" class="font-bold text-red-700">0</span> veces.
+        </p>
+    </div>
+    <footer class="bg-yellow-800 text-yellow-100 py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- Team Members -->
+                <div class="col-span-2">
+                    <h3 class="text-xl font-semibold mb-4">Nuestro Equipo</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <div>
+                                <p class="font-medium">Jhonathan Rolando Capcha Quintanilla</p>
+                                <p class="text-sm text-yellow-200">jhonathan.capcha@upsjb.edu.pe</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <div>
+                                <p class="font-medium">Eduardo Javier Hernández Hernández</p>
+                                <p class="text-sm text-yellow-200">eduardoj.hernandez@upsjb.edu.pe</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <div>
+                                <p class="font-medium">Juan Jose Gavilan Ayala</p>
+                                <p class="text-sm text-yellow-200">jorge.mendoza@elcruce.com</p>
+                            </div>
+                            
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <div>
+                                <p class="font-medium">Julio Cesar Pillaca Ccorahua</p>
+                                <p class="text-sm text-yellow-200">Julio.pillaca@upsjb.edu.pe</p>
+                            </div>
+                            
+                        </div>
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fa-solid fa-circle-user"></i>
+                            </span>
+                            <div>
+                                <p class="font-medium">Ing. Luis Alfredo Castillon Siguas</p>
+                                <p class="text-sm text-yellow-200">luis.castillon@upsjb.edu.pe</p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Company Info -->
+                <div class="text-right">
+                    <img src="SJ.webp" alt="El Cruce Logo" class="ml-auto mb-4">
+                    <p class="text-sm mb-2">V ciclo - TA</p>
+                    <p class="text-sm mb-2">Ingeniería de Software II</p>
+                    <p class="text-sm">Ingeniería de Computación y Sistemas</p>
+                </div>
+            </div>
+    
+
+    
+            <!-- Copyright and Links -->
+            <div class="text-center border-t border-yellow-700 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                </div>
+                <p class="mt-4">&copy; 2024 Pollería El cruce. Todos los derechos reservados. <span class="font-medium"></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+                // Visit counter
+                let visitCount = localStorage.getItem('visitCount') || 0;
+        visitCount = parseInt(visitCount) + 1;
+        localStorage.setItem('visitCount', visitCount);
+        document.getElementById('visit-count').textContent = visitCount;
+
+        // Functions for modals
+        function openModal(modalType) {
+            const modal = document.getElementById(`modal-${modalType}`);
+            modal.style.display = "block";
+            loadModalData(modalType);
+        }
+    </script>
+</body>
+</html>
